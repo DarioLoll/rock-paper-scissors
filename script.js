@@ -1,62 +1,70 @@
 let humanScore = 0;
 let computerScore = 0;
 
-console.log("Welcome to the Rock-Paper-Scissors Game!");
-testComputerChoice(3000);
-playGame();
+let btnRock = document.querySelector(".rock");
+let btnScissors = document.querySelector(".scissors");
+let btnPaper = document.querySelector(".paper");
 
-function testComputerChoice(iterations) {
-    let rocks = 0;
-    let scissors = 0;
-    let papers = 0;
-    for(let i = 0; i < iterations; i++) {
-        let choice = getComputerChoice();
-        if (choice === "rock") {
-            rocks++;
-        } else if (choice === "scissors") {
-            scissors++;
-        } else if (choice === "paper") {
-            papers++;
-        } else {
-            console.log(`Error! The computer chose ${choice}`);
-            return;
-        }
-    }
-    console.log(`Test with ${iterations} iterations over.`);
-    console.log(`Result: ${rocks} rocks, ${scissors} scissors, ${papers} papers.`);
+btnRock.addEventListener("click", () => playGame("rock"));
+btnScissors.addEventListener("click", () => playGame("scissors"));
+btnPaper.addEventListener("click", () => playGame("paper"));
+
+function playGame(humanSelection) {
+    const computerSelection = getComputerChoice();
+
+    displayUserChoice(humanSelection);
+    displayComputerChoice(computerSelection);
+
+    console.log(`You chose ${humanSelection}!`);
+    console.log(`The computer chose ${computerSelection}`);
+
+    let result = playRound(humanSelection, computerSelection);
+    processRoundResult(result);
+    displayScore();
 }
 
-function playGame() {
-    for(let i = 0; i < 5; i++) {
-        console.log(`Round ${i + 1}`);
-        const humanSelection = getValidHumanChoice().toLowerCase();
-        const computerSelection = getComputerChoice();
+function displayScore() {
+    let userScoreText = document.querySelector("#user-score");
+    userScoreText.textContent = humanScore;
 
-        console.log(`You chose ${humanSelection}!`);
-        console.log(`The computer chose ${computerSelection}`);
+    let computerScoreText = document.querySelector("#computer-score");
+    computerScoreText.textContent = computerScore;
+}
 
-        let result = playRound(humanSelection, computerSelection);
-        processRoundResult(result);
+function displayUserChoice(choice) {
+    let userChoiceImage = document.querySelector(".user-choice");
+    displayChoice(userChoiceImage, choice);
+}
+
+function displayComputerChoice(choice) {
+    let computerChoiceImage = document.querySelector(".computer-choice");
+    displayChoice(computerChoiceImage, choice);
+}
+
+function displayChoice(imageElement, choice) {
+    if (!(imageElement instanceof Image)) {
+        console.log("Invalid image element")
+        return;
     }
-
-    if (humanScore > computerScore) {
-        console.log("Nice, you won!");
-    } else if (computerScore > humanScore) {
-        console.log("You lost bruh");
-    } else {
-        console.log("Draw, rematch now!");
-    }
-
-    console.log("Refresh the page to start a new game!");
+    imageElement.src = `images/${choice}.png`;
+    imageElement.alt = choice;
 }
 
 function processRoundResult(result) {
+    let userChoiceImage = document.querySelector(".user-choice");
+    let computerChoiceImage = document.querySelector(".computer-choice");
+
+    userChoiceImage.classList.remove("winner");
+    computerChoiceImage.classList.remove("winner");
+
     if (result === 1) {
         humanScore++;
         console.log("You won!");
+        userChoiceImage.classList.add("winner");
     } else if (result === -1) {
         computerScore++;
         console.log("The computer won!");
+        computerChoiceImage.classList.add("winner");
     } else {
         console.log("It's a draw!");
     }
@@ -105,11 +113,24 @@ function getComputerChoice() {
     return computerChoice;
 }
 
-function getValidHumanChoice() {
-    let userInput = prompt("Enter rock / paper / scissors: ");
-    while (userInput != "rock" && userInput != "scissors" && userInput != "paper") {
-        userInput = prompt("Wrong input! Enter rock / paper / scissors: ");
+function testComputerChoice(iterations) {
+    let rocks = 0;
+    let scissors = 0;
+    let papers = 0;
+    for(let i = 0; i < iterations; i++) {
+        let choice = getComputerChoice();
+        if (choice === "rock") {
+            rocks++;
+        } else if (choice === "scissors") {
+            scissors++;
+        } else if (choice === "paper") {
+            papers++;
+        } else {
+            console.log(`Error! The computer chose ${choice}`);
+            return;
+        }
     }
-    return userInput;
+    console.log(`Test with ${iterations} iterations over.`);
+    console.log(`Result: ${rocks} rocks, ${scissors} scissors, ${papers} papers.`);
 }
 

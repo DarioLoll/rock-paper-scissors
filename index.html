@@ -4,9 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock-Paper-Scissors</title>
-    <script src="script.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
-    
+    <nav>
+        <h1>Rock - Paper - Scissors</h1>
+
+        <ul class="nav-links">
+            <li>
+                <a href="https://www.theodinproject.com/lessons/foundations-revisiting-rock-paper-scissors">
+                    The Odin Project
+                </a>
+            </li>
+            <li>
+                <a href="https://github.com/DarioLoll/rock-paper-scissors">
+                    Source Code
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="scoreboard">
+        <div class="player-name">You</div>
+        <div class="score">
+            <div class="player-score" id="user-score">0</div>
+            <div class="score-seperator">--</div>
+            <div class="player-score" id="computer-score">0</div>
+        </div>
+        <div class="player-name">Computer</div>
+    </section>
+
+    <section class="current-choices">
+        <img src="images/unknown.png" alt="Unknown" class="user-choice">
+        <div class="choice-seperator">VS.</div>
+        <img src="images/unknown.png" alt="'Unknown" class="computer-choice">
+    </section>
+
+    <section class="choice-buttons">
+        <button class="rock choice">
+            <img src="images/rock.png" alt="Rock">
+        </button>
+
+        <button class="scissors choice">
+            <img src="images/scissors.png" alt="Rock">
+        </button>
+
+        <button class="paper choice">
+            <img src="images/paper.png" alt="Rock">
+        </button>
+    </section>
 </body>
 </html>
